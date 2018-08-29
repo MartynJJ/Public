@@ -40,12 +40,28 @@ class API_Caller:
         return price
         
 class Wallet:
-    def __init__(self, base = " USD"):
+    def __init__(self, name="Default", base = " USD"):
         self.holdings = {}
+        self.name = name
         self.default_base = base
     def add_asset(self, symbol):
         asset = Asset(symbol)
         self.holdings[asset.symbol] = asset
+    def wallet_value(self):
+        balance = 0
+        for symbol,asset in self.holdings.items(): 
+            balance += asset.asset_value()
+            return balance
+    def wallet_detail(self):
+        detail = {}
+        for symbol,asset in self.holdings.items(): 
+                detail[symbol] = asset.total_balance()
+        return detail
+    def print_wallet_detail(self):
+        detail = self.wallet_detail()
+        print("Balance detail for %s wallet" % (self.name))
+        for symbol,balance in detail.items():
+            print("%s : %s" % (symbol, balance))
         
 #Function testings  
 '''          
@@ -63,3 +79,5 @@ my_wallet.add_asset("MNN")
 my_wallet.holdings["MNN"].balance_input("bfx")
 
 print(my_wallet.holdings["MNN"].asset_value())
+
+my_wallet.print_wallet_detail()
