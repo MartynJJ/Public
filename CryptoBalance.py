@@ -73,22 +73,28 @@ class Wallet_bag:
 class Console_interface:
     def __init__(self):
         self.status = False
+        self.bag = Wallet_bag()
+        self.actions = [Console_action_index(0, "[0] Quit", self.quit_prog()),
+                        Console_action_index(1, "[1] Create New Wallet", self.new_wallet())]
+    def quit_prog(self):
+        quit()
+    def new_wallet(self):
+        name = raw_input("Enter wallet name:\n")
+        self.bag.add_wallet(name)
     def start(self):
         self.status = True
-        
         print("Welcome to CrpyCrpyto\nPlease Choose an option:")
-        #update to a dictionary with key as description and value as the class function call
-        bag = Wallet_bag()
-        print("[1] Create New Wallet")
-        print("[0] Quit")
-        input = int(raw_input())
-        if (input == 0):
-            quit()
-        elif (input == 1):
-            name = raw_input("Enter wallet name:\n")
-            bag.add_wallet(name)
+        for i in len(self.actions):
+            print(self.actions[i])
+class Console_action_index:
+    def __init__(self, index, desc, action):
+        self.index = index
+        self.desc = desc
+        self.action = action
+
         
-#Start Main:
+        
+#int Main():
 instance = Console_interface()
 instance.start()
 
