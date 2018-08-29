@@ -62,7 +62,18 @@ class Wallet:
         print("Balance detail for %s wallet" % (self.name))
         for symbol,balance in detail.items():
             print("%s : %s" % (symbol, balance))
-        
+
+class Wallet_bag:
+    def __init__(self):
+        self.wallets = []
+        self.wallet_count = 0
+    def add_wallet(self, name="Default", base = " USD"):
+        if self.wallet_count > 5:
+            print("No more wallets avaliable")
+        else:
+            self.wallets.append(Wallet(name,base))
+            self.wallet_count += 1
+            
 #Function testings  
 '''          
 mine = Asset('MNN')
@@ -72,8 +83,9 @@ mine.balance_input("bmx")
 mine.balance_detail()
 print(mine.asset_value())
 '''
-
-my_wallet = Wallet()
+bag = Wallet_bag()
+bag.add_wallet()
+my_wallet = bag.wallets[0]
 
 my_wallet.add_asset("MNN")
 my_wallet.holdings["MNN"].balance_input("bfx")
@@ -81,3 +93,4 @@ my_wallet.holdings["MNN"].balance_input("bfx")
 print(my_wallet.holdings["MNN"].asset_value())
 
 my_wallet.print_wallet_detail()
+
