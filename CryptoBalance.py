@@ -2,11 +2,7 @@
 class Asset:
     def __init__(self, symbol):
         self.symbol = symbol
-        self.balance_list = {
-            "bfx" : 0,
-            "gdax" : 0,
-            "blockchain_info" : 0
-            }
+        self.balance_list = {}
         self.API = API_Caller("url here")
     def total_balance(self):
         total = 0
