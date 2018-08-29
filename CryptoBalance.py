@@ -81,8 +81,7 @@ class Console_interface:
                         Console_action_index(2, "[2] Open wallet", self.open_wallet)]
                         
     def quit_prog(self):
-        print("Goodbye")
-        quit()
+        self.status = False
     def new_wallet(self):
         name = raw_input("Enter wallet name:\n")
         self.bag.add_wallet(name)
@@ -120,7 +119,7 @@ class Console_action_index:
 
 instance = Console_interface()
 instance.start()
-
+print("Goodbye")
         
 #Function testings  
 '''          
