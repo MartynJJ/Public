@@ -40,6 +40,8 @@ class Wallet:
         self.holdings = {}
         self.name = name
         self.default_base = base
+    def give_name(self):
+        return str(self.name)
     def add_asset(self, symbol):
         asset = Asset(symbol)
         self.holdings[asset.symbol] = asset
@@ -65,7 +67,7 @@ class Wallet_bag:
         self.wallet_count = 0
     def add_wallet(self, name="Default", base = " USD"):
         if self.wallet_count > 5:
-            print("No more wallets avaliable")
+            print("No more wallets avaliable\n\n\n")
         else:
             self.wallets.append(Wallet(name,base))
             self.wallet_count += 1
@@ -74,27 +76,48 @@ class Console_interface:
     def __init__(self):
         self.status = False
         self.bag = Wallet_bag()
-        self.actions = [Console_action_index(0, "[0] Quit", self.quit_prog()),
-                        Console_action_index(1, "[1] Create New Wallet", self.new_wallet())]
+        self.actions = [Console_action_index(0, "[0] Quit", self.quit_prog),
+                        Console_action_index(1, "[1] Create new wallet", self.new_wallet),
+                        Console_action_index(2, "[2] Open wallet", self.open_wallet)]
+                        
     def quit_prog(self):
+        print("Goodbye")
         quit()
     def new_wallet(self):
         name = raw_input("Enter wallet name:\n")
         self.bag.add_wallet(name)
+    def open_wallet(self):
+        if (self.bag.wallet_count == 0):
+            print("\n\n\nNo wallets avaliable, please create a wallet.\nEnter to continue")
+            raw_input()
+        else:
+            print("\n\n\n")
+            for i in range(len(self.bag.wallets)):
+                print("[%d] : %s" % (int(i), self.bag.wallets[i].give_name()))
+            wallet_choice = int(raw_input("Select wallet to open:\n"))
+            print(self.bag.wallets[wallet_choice].wallet_detail())
     def start(self):
         self.status = True
-        print("Welcome to CrpyCrpyto\nPlease Choose an option:")
-        for i in len(self.actions):
-            print(self.actions[i])
+        while(self.status == True):
+            print("Welcome to CrpyCrpyto\nPlease Choose an option:")
+            for i in range(len(self.actions)):
+                print(self.actions[i].give_desc())
+            action = int(raw_input("Enter action: "))
+            self.actions[action].action()
+            
+            
 class Console_action_index:
     def __init__(self, index, desc, action):
         self.index = index
         self.desc = desc
         self.action = action
+    def give_desc(self):
+        return self.desc
 
         
         
 #int Main():
+
 instance = Console_interface()
 instance.start()
 
