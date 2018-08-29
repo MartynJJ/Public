@@ -7,6 +7,7 @@ class Asset:
             "gdax" : 0,
             "blockchain_info" : 0
             }
+        self.API = API_Caller("url here")
     def total_balance(self):
         total = 0
         for key,value in self.balance_list.items():
@@ -25,8 +26,7 @@ class Asset:
         for key,value in self.balance_list.items():
             print("%s : %f" % (key, value))
     def asset_price(self, base = "USD"):
-        #INSERT CMC API call here
-        price = 0.05 #temp price
+        price = self.API.price_call(self.symbol, base) 
         return (price)
     def asset_value(self, base = "USD"):
         return (self.total_balance() * self.asset_price(base))
@@ -34,8 +34,12 @@ class Asset:
 class API_Caller:
     def __init__(self, url):
         self.url = url
+    def price_call(self, symbol, base):
+        #API call  here
+        price = 0.05
+        return price
         
-        
+
 #Function testings            
 mine = Asset('MNN')
 mine.balance_input()
