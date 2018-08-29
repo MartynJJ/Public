@@ -40,6 +40,15 @@ class Wallet:
         self.holdings = {}
         self.name = name
         self.default_base = base
+        self.status = False
+    def open_wallet(self): # Interface function - Fill in next steps of wallet interface
+        self.status = True
+        while (self.status == True):
+            self.print_wallet_detail()
+            raw_input()
+            self.close_wallet()
+    def close_wallet(self):
+        self.status = False
     def give_name(self):
         return str(self.name)
     def add_asset(self, symbol):
@@ -94,8 +103,8 @@ class Console_interface:
             for i in range(len(self.bag.wallets)):
                 print("[%d] : %s" % (int(i), self.bag.wallets[i].give_name()))
             wallet_choice = int(raw_input("Select wallet to open:\n"))
-            print(self.bag.wallets[wallet_choice].wallet_detail())
-    def start(self):
+            self.bag.wallets[wallet_choice].open_wallet()
+    def start(self): # Interface function
         self.status = True
         while(self.status == True):
             print("Welcome to CrpyCrpyto\nPlease Choose an option:")
