@@ -31,6 +31,11 @@ class Asset:
     def asset_value(self, base = "USD"):
         return (self.total_balance() * self.asset_price(base))
 
+class API_Caller:
+    def __init__(self, url):
+        self.url = url
+        
+        
 #Function testings            
 mine = Asset('MNN')
 mine.balance_input()
