@@ -41,17 +41,28 @@ class Wallet:
         self.name = name
         self.default_base = base
         self.status = False
+        self.actions = [Console_action_index(0, "[0] Close Wallet", self.close_wallet),
+                        Console_action_index(1, "[1] Add asset", self.add_asset),
+                        Console_action_index(2, "[2] Show Wallet Value", self.wallet_value),
+                        Console_action_index(3, "[3] Print wallet detail", self.print_wallet_detail)]
+                        
+                        
     def open_wallet(self): # Interface function - Fill in next steps of wallet interface
         self.status = True
+        self.print_wallet_detail()
         while (self.status == True):
-            self.print_wallet_detail()
-            raw_input()
-            self.close_wallet()
+            for i in range(len(self.actions)):
+                print(self.actions[i].give_desc())
+            action = int(raw_input("Enter action: "))
+            self.actions[action].action()
+            print("\n\n\n\n\n")
     def close_wallet(self):
         self.status = False
     def give_name(self):
         return str(self.name)
-    def add_asset(self, symbol):
+    def add_asset(self, symbol=None):
+        if (symbol == None):
+            symbol = raw_input("Enter Symbol: ")
         asset = Asset(symbol)
         self.holdings[asset.symbol] = asset
     def wallet_value(self):
@@ -69,6 +80,7 @@ class Wallet:
         print("Balance detail for %s wallet" % (self.name))
         for symbol,balance in detail.items():
             print("%s : %s" % (symbol, balance))
+        raw_input("Press enter to return")
 
 class Wallet_bag:
     def __init__(self):
