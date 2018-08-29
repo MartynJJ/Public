@@ -74,6 +74,29 @@ class Wallet_bag:
             self.wallets.append(Wallet(name,base))
             self.wallet_count += 1
             
+class Console_interface:
+    def __init__(self):
+        self.status = False
+    def start(self):
+        self.status = True
+        
+        print("Welcome to CrpyCrpyto\nPlease Choose an option:")
+        #update to a dictionary with key as description and value as the class function call
+        bag = Wallet_bag()
+        print("[1] Create New Wallet")
+        print("[0] Quit")
+        input = int(raw_input())
+        if (input == 0):
+            quit()
+        elif (input == 1):
+            name = raw_input("Enter wallet name:\n")
+            bag.add_wallet(name)
+        
+#Start Main:
+instance = Console_interface()
+instance.start()
+
+        
 #Function testings  
 '''          
 mine = Asset('MNN')
@@ -82,7 +105,7 @@ print(mine.total_balance())
 mine.balance_input("bmx")
 mine.balance_detail()
 print(mine.asset_value())
-'''
+
 bag = Wallet_bag()
 bag.add_wallet()
 my_wallet = bag.wallets[0]
@@ -93,4 +116,4 @@ my_wallet.holdings["MNN"].balance_input("bfx")
 print(my_wallet.holdings["MNN"].asset_value())
 
 my_wallet.print_wallet_detail()
-
+'''
