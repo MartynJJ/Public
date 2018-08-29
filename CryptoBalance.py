@@ -24,7 +24,12 @@ class Asset:
         print("%s Balance Detail:" % (self.symbol))
         for key,value in self.balance_list.items():
             print("%s : %f" % (key, value))
-
+    def asset_price(self, base = "USD"):
+        #INSERT CMC API call here
+        price = 0.05 #temp price
+        return (price)
+    def asset_value(self, base = "USD"):
+        return (self.total_balance() * self.asset_price(base))
 
 #Function testings            
 mine = Asset('MNN')
@@ -32,3 +37,4 @@ mine.balance_input()
 print(mine.total_balance())
 mine.balance_input("bmx")
 mine.balance_detail()
+print(mine.asset_value())
