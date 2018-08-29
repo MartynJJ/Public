@@ -39,11 +39,27 @@ class API_Caller:
         price = 0.05
         return price
         
-
-#Function testings            
+class Wallet:
+    def __init__(self, base = " USD"):
+        self.holdings = {}
+        self.default_base = base
+    def add_asset(self, symbol):
+        asset = Asset(symbol)
+        self.holdings[asset.symbol] = asset
+        
+#Function testings  
+'''          
 mine = Asset('MNN')
 mine.balance_input()
 print(mine.total_balance())
 mine.balance_input("bmx")
 mine.balance_detail()
 print(mine.asset_value())
+'''
+
+my_wallet = Wallet()
+
+my_wallet.add_asset("MNN")
+my_wallet.holdings["MNN"].balance_input("bfx")
+
+print(my_wallet.holdings["MNN"].asset_value())
