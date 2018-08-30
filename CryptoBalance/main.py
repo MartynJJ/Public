@@ -1,5 +1,5 @@
-import calc
+import Cryptobalanceclass
 
-instance = calc.Console_interface()
+instance = Cryptobalanceclass.Console_interface()
 instance.start()
 print("Goodbye")
