@@ -2,8 +2,24 @@
 class Asset:
     def __init__(self, symbol):
         self.symbol = symbol
+        self.status = False
         self.balance_list = {}
         self.API = API_Caller("url here")
+        self.actions = [Console_action_index(0, "[0] Back to wallet", self.close),
+                        Console_action_index(1, "[1] Balance Detail", self.balance_detail),
+                        Console_action_index(2, "[2] Balance Input", self.balance_input)]
+                        #Console_action_index(2, "[2] , ),
+    def start(self):
+        self.status = True
+        self.balance_detail()
+        while (self.status == True):
+            for i in range(len(self.actions)):
+                print(self.actions[i].give_desc())
+            action = int(raw_input("Enter action: "))
+            self.actions[action].action()
+            print("\n\n\n\n\n")
+    def close(self):
+        self.status = False
     def total_balance(self):
         total = 0
         for key,value in self.balance_list.items():
@@ -44,7 +60,9 @@ class Wallet:
         self.actions = [Console_action_index(0, "[0] Close Wallet", self.close_wallet),
                         Console_action_index(1, "[1] Add asset", self.add_asset),
                         Console_action_index(2, "[2] Show Wallet Value", self.wallet_value),
-                        Console_action_index(3, "[3] Print wallet detail", self.print_wallet_detail)]
+                        Console_action_index(3, "[3] Print wallet detail", self.print_wallet_detail),
+                        Console_action_index(4, "[4] View asset detail", self.open_asset)]
+                        #action to dive into asset break down - trigger to asset UI
                         
                         
     def open_wallet(self): # Interface function - Fill in next steps of wallet interface
@@ -56,6 +74,10 @@ class Wallet:
             action = int(raw_input("Enter action: "))
             self.actions[action].action()
             print("\n\n\n\n\n")
+    def open_asset(self):
+        self.print_wallet_detail()
+        asset = raw_input("Enter symbol to view:\n")
+        self.holdings[asset].start()
     def close_wallet(self):
         self.status = False
     def give_name(self):
@@ -80,7 +102,7 @@ class Wallet:
         print("Balance detail for %s wallet" % (self.name))
         for symbol,balance in detail.items():
             print("%s : %s" % (symbol, balance))
-        raw_input("Press enter to return")
+        
 
 class Wallet_bag:
     def __init__(self):
@@ -122,10 +144,31 @@ class Console_interface:
             print("Welcome to CrpyCrpyto\nPlease Choose an option:")
             for i in range(len(self.actions)):
                 print(self.actions[i].give_desc())
-            action = int(raw_input("Enter action: "))
-            self.actions[action].action()
+            action =(raw_input("Enter action: "))
+            selection = action_choice(action)
+            selection.validate()
+            if (selection.report()):
+                self.actions[selection.give_choice()].action()
             
-            
+class action_choice:
+    def __init__(self, choice, validation=None):
+        self.choice = choice
+        self.validation = validation
+        self.status = False
+    def validate(self):
+        try:
+            self.choice = int(self.choice)
+        except ValueError:
+            self.status = 
+        if (type(self.choice) != int):
+            self.status = False
+            print("Choice entered is not valid")
+        else:
+            self.status = True
+    def report(self):
+        return self.status
+    def give_choice(self):
+        return self.choice
 class Console_action_index:
     def __init__(self, index, desc, action):
         self.index = index
