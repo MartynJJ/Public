@@ -1,4 +1,4 @@
-
+import os
 class Asset:
     def __init__(self, symbol):
         self.symbol = symbol
@@ -8,7 +8,7 @@ class Asset:
         self.actions = [Console_action_index(0, "[0] Back to wallet", self.close),
                         Console_action_index(1, "[1] Balance Detail", self.balance_detail),
                         Console_action_index(2, "[2] Balance Input", self.balance_input)]
-                        #Console_action_index(2, "[2] , ),
+                        #Console_action_index(3, "[3] , )
     def start(self):
         self.status = True
         self.balance_detail()
@@ -114,14 +114,39 @@ class Wallet_bag:
         else:
             self.wallets.append(Wallet(name,base))
             self.wallet_count += 1
-            
+
+class File_manager:
+    def __init__(self):
+        self.files = []
+        self.extension = "cbf"
+        self.dir = "./save/"
+        self.current_file = 0
+    def dir_scan(self):
+        for files in range(len(os.listdir(self.dir))):
+            self.files.append((os.listdir(self.dir))[files])
+    def dir_show(self):
+        self.dir_scan()
+        for i in range(len(self.files)):
+            print("[%d] %s" % (i, self.files[i]))
+    def file(self):
+        file == None
+        file = raw_input("Select file number")
+        if (file == None):
+            return self.files[self.current_file]
+        else:
+            self.current_file = file
+            return self.files[self.current_file]
 class Console_interface:
     def __init__(self):
         self.status = False
         self.bag = Wallet_bag()
+        self.files = File_manager()
         self.actions = [Console_action_index(0, "[0] Quit", self.quit_prog),
                         Console_action_index(1, "[1] Create new wallet", self.new_wallet),
-                        Console_action_index(2, "[2] Open wallet", self.open_wallet)]
+                        Console_action_index(2, "[2] Open wallet", self.open_wallet),
+                        Console_action_index(3, "[3] Dir Show", self.files.dir_show),
+                        Console_action_index(4, "[4] Confirm/Change File", self.files.file)
+                        ]
                         
     def quit_prog(self):
         self.status = False
@@ -141,7 +166,7 @@ class Console_interface:
     def start(self): # Interface function
         self.status = True
         while(self.status == True):
-            print("Welcome to CrpyCrpyto\nPlease Choose an option:")
+            print("\n\n\n\nWelcome to CrpyCrpyto\nPlease Choose an option:")
             for i in range(len(self.actions)):
                 print(self.actions[i].give_desc())
             action =(raw_input("Enter action: "))
@@ -149,7 +174,7 @@ class Console_interface:
             selection.validate()
             if (selection.report()):
                 self.actions[selection.give_choice()].action()
-            
+            raw_input()
 class action_choice:
     def __init__(self, choice, validation=None):
         self.choice = choice
@@ -159,7 +184,7 @@ class action_choice:
         try:
             self.choice = int(self.choice)
         except ValueError:
-            self.status = 
+            self.status = False
         if (type(self.choice) != int):
             self.status = False
             print("Choice entered is not valid")
@@ -181,9 +206,7 @@ class Console_action_index:
         
 #int Main():
 
-instance = Console_interface()
-instance.start()
-print("Goodbye")
+
         
 #Function testings  
 '''          
