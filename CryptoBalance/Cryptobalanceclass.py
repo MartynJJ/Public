@@ -174,7 +174,8 @@ class Console_interface:
             selection.validate()
             if (selection.report()):
                 self.actions[selection.give_choice()].action()
-            raw_input()
+            if(self.actions.action() != 0):
+                raw_input()
 class action_choice:
     def __init__(self, choice, validation=None):
         self.choice = choice
