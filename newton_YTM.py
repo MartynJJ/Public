@@ -30,8 +30,7 @@ def calc_yield(price, coupon, time, error = 10**-10, give_count = False):
 
 price = 103.7704725
 coupon = 0.04
-tau = 0.7362637362637363
-T = (5.5+0.7362637362637363)
+T = (5.0)
 
 pred_yield = calc_yield(price, coupon, T, give_count=True)
 print(pred_yield)
